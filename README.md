@@ -14,8 +14,6 @@ A plataforma foi criada para gerenciar vendas, pedidos e produtos de um marketpl
 - **React**
 - **TypeScript**
 - **Tailwind CSS**
-- **Chart.js**
-- **Axios**
 
 ---
 
@@ -35,24 +33,6 @@ A plataforma foi criada para gerenciar vendas, pedidos e produtos de um marketpl
 ---
 
 ## 🧱 Estrutura de Pastas (principais)
-
-src/
-├── app/
-│ ├── login/
-│ ├── dashboard/
-│ ├── produtos/
-│ │ ├── listar/
-│ │ └── cadastrar/
-│ ├── pedidos/
-│ │ ├── listar/
-│ │ └── [id]/
-│ └── usuarios/
-│ └── cadastrar/
-├── components/
-├── services/
-├── hooks/
-├── utils/
-└── styles/
 
 ---
 
