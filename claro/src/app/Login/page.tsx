@@ -1,14 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
-  const [userData, setUserData] = useState<{ email: string; senha: string } | null>(null)
+  const [successMessage, setSuccessMessage] = useState('')
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!email || !senha) {
@@ -16,8 +18,40 @@ export default function LoginPage() {
       return
     }
 
-    setUserData({ email, senha })
-    setErrorMessage('')
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
+    try {
+      const response = await fetch(`${apiUrl}/customer/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: senha,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Falha ao autenticar.')
+      }
+
+      const data = await response.json()
+
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('email', data.email)
+
+      setSuccessMessage('Login realizado com sucesso!')
+      setErrorMessage('')
+
+      // Redireciona após 2 segundos
+      setTimeout(() => {
+        router.push('/dashboard')
+      }, 2000)
+    } catch (error) {
+      setErrorMessage('E-mail ou senha inválidos.')
+      setSuccessMessage('')
+    }
   }
 
   return (
@@ -35,8 +69,14 @@ export default function LoginPage() {
             Insira seu e-mail e senha para acessar sua conta
           </p>
 
+          {/* Mensagens de erro ou sucesso */}
           {errorMessage && (
             <div className="bg-[#7D0000] text-white p-2 rounded mb-4">{errorMessage}</div>
+          )}
+          {successMessage && (
+            <div className="bg-green-500 text-white p-2 rounded mb-4">
+              {successMessage}
+            </div>
           )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -46,7 +86,7 @@ export default function LoginPage() {
                 id="email"
                 type="email"
                 placeholder="Insira seu e-mail"
-                className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7D0000]"
+                className="border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7D0000] bg-white text-gray-900 text-base shadow-sm"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
@@ -59,7 +99,7 @@ export default function LoginPage() {
                 id="senha"
                 type="password"
                 placeholder="Digite sua senha"
-                className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7D0000]"
+                className="border-2 border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7D0000] bg-white text-gray-900 text-base shadow-sm"
                 value={senha}
                 onChange={e => setSenha(e.target.value)}
                 required
@@ -76,14 +116,6 @@ export default function LoginPage() {
               Acessar
             </button>
           </form>
-
-          {userData && (
-            <div className="mt-6 p-4 bg-green-200 rounded">
-              <h2 className="font-bold text-lg">Dados do usuário:</h2>
-              <p><strong>E-mail:</strong> {userData.email}</p>
-              <p><strong>Senha:</strong> {userData.senha}</p>
-            </div>
-          )}
         </div>
       </div>
     </div>
