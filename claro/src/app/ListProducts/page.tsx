@@ -84,6 +84,10 @@ export default function ListarProdutos() {
                                                 src={product.imgUrl}
                                                 alt={product.name}
                                                 className="w-16 h-16 object-cover rounded"
+                                                onError={(error) => {
+                                                    error.currentTarget.onerror = null
+                                                    error.currentTarget.src = "/sem-imagem.jpg"
+                                                }}
                                             />
                                         </td>
                                         <td className="px-4 py-3 font-medium text-gray-900">{product.name}</td>
