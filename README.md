@@ -10,7 +10,7 @@ A plataforma foi criada para gerenciar vendas, pedidos e produtos de um marketpl
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Next.js** (App Router)
+- **Next.js**
 - **React**
 - **TypeScript**
 - **Tailwind CSS**
