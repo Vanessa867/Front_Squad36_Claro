@@ -1,43 +1,46 @@
 'use client';
 
+import { useState } from 'react';
 import FaturamentoMensalChart from "@/app/Components/Charts/FaturamentoMensalChart";
 import DistribuicaoVendasAnualChart from "../Components/Charts/DistribuicaoVendasAnualChart";
 import DistribuicaoPorRegiaoChart from "@/app/Components/Charts/DistribuicaoPorRegiaoChart";
+import UserMenu from "../Components/Charts/UserMenu";
+import FaturamentoTotal from "../Components/Charts/FaturamentoTotal";
+import QuantidadeDeProdutosEstoque from "../Components/Charts/QuantidadeDeProdutosEstoque";
 
 export default function DashboardPage() {
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+
   return (
     <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
-
-      {/* Header do usuário */}
       <div className="flex justify-end">
-        <div className="text-sm text-gray-700 font-medium">
-          João Silva ⌄
-        </div>
+        <UserMenu />
       </div>
 
-      {/* Linha 1: Indicadores */}
+      {/* Primeira linha com Faturamento Total e Quantidade de Produtos em Estoque */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
         <div className="bg-white rounded-xl shadow p-4">
-          <p className="text-sm text-gray-500">Faturamento total</p>
-          <h2 className="text-2xl font-semibold">R$ 500.000</h2>
+          <FaturamentoTotal />
         </div>
         <div className="bg-white rounded-xl shadow p-4">
-          <p className="text-sm text-gray-500">Quantidade de produtos em estoque</p>
-          <h2 className="text-2xl font-semibold">10.000</h2>
+          <QuantidadeDeProdutosEstoque />
         </div>
       </div>
 
-      {/* Linha 2: Gráficos lado a lado */}
+      {/* Segunda linha com Mapa e Gráfico de Faturamento */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-1">
-          <DistribuicaoPorRegiaoChart data={[]} />
+          <DistribuicaoPorRegiaoChart
+            selectedRegion={selectedRegion}
+            onRegionClick={setSelectedRegion} // Função para atualizar a região selecionada
+          />
         </div>
         <div className="xl:col-span-2">
-          <FaturamentoMensalChart />
+          <FaturamentoMensalChart selectedRegion={selectedRegion} />
         </div>
       </div>
 
-      {/* Linha 3: Gráfico de linha anual */}
+      {/* Terceira linha com Gráfico de Distribuição de Vendas Anual */}
       <div>
         <DistribuicaoVendasAnualChart />
       </div>
