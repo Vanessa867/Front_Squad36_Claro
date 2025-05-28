@@ -1,6 +1,6 @@
 # 🛒 Plataforma de Gerenciamento de Vendas - Ustore (Frontend)
 
-Este repositório contém o frontend da aplicação desenvolvida pela **Squad 36 - UNICAP**, no contexto do **programa Embarque Digital**, em parceria com a empresa **Ustore**.
+Este repositório contém o frontend da aplicação desenvolvida pela **Squad 36 - UNICAP**, no contexto do **programa Embarque Digital**, em parceria com a empresa **Claro**.
 
 ## 📌 Objetivo
 
