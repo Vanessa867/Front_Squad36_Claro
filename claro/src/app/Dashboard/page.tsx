@@ -12,17 +12,17 @@ export default function DashboardPage() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 min-h-screen">
+    <div className="p-6 space-y-6 bg-gray-50 min-h-screen w-full">
       <div className="flex justify-end">
         <UserMenu />
       </div>
 
       {/* Primeira linha com Faturamento Total e Quantidade de Produtos em Estoque */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow p-4">
+        <div className="bg-white rounded-xl shadow p-0">
           <FaturamentoTotal />
         </div>
-        <div className="bg-white rounded-xl shadow p-4">
+        <div className="bg-white rounded-xl shadow p-0">
           <QuantidadeDeProdutosEstoque />
         </div>
       </div>
@@ -32,11 +32,11 @@ export default function DashboardPage() {
         <div className="xl:col-span-1">
           <DistribuicaoPorRegiaoChart
             selectedRegion={selectedRegion}
-            onRegionClick={setSelectedRegion} // Função para atualizar a região selecionada
+            onRegionClick={setSelectedRegion}
           />
         </div>
         <div className="xl:col-span-2">
-          <FaturamentoMensalChart selectedRegion={selectedRegion} />
+          <FaturamentoMensalChart region={selectedRegion} />
         </div>
       </div>
 
