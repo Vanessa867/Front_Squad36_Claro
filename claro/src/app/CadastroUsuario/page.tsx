@@ -10,9 +10,9 @@ export default function CadastrarUsuario() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [cargo, setCargo] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [estado, setEstado] = useState('');
+  const [cargo, setPosition] = useState('');
+  const [cidade, setCity] = useState('');
+  const [estado, setState] = useState('');
 
   const handleCadastro = async () => {
     const usuario = {
@@ -40,9 +40,9 @@ export default function CadastrarUsuario() {
         setNome('');
         setEmail('');
         setSenha('');
-        setCargo('');
-        setCidade('');
-        setEstado('');
+        setPosition('');
+        setCity('');
+        setState('');
         setTipoUsuario('admin');
       } else {
         const erro = await response.text();
@@ -131,7 +131,7 @@ export default function CadastrarUsuario() {
           <input
             type="text"
             value={cargo}
-            onChange={(e) => setCargo(e.target.value)}
+            onChange={(e) => setPosition(e.target.value)}
             className="w-full border border-gray-300 rounded-lg p-3 text-sm text-black shadow-sm"
           />
         </div>
@@ -141,7 +141,7 @@ export default function CadastrarUsuario() {
           <input
             type="text"
             value={cidade}
-            onChange={(e) => setCidade(e.target.value)}
+            onChange={(e) => setCity(e.target.value)}
             className="w-full border border-gray-300 rounded-lg p-3 text-sm text-black shadow-sm"
           />
         </div>
@@ -151,7 +151,7 @@ export default function CadastrarUsuario() {
           <input
             type="text"
             value={estado}
-            onChange={(e) => setEstado(e.target.value)}
+            onChange={(e) => setState(e.target.value)}
             className="w-full border border-gray-300 rounded-lg p-3 text-sm text-black shadow-sm"
           />
         </div>
