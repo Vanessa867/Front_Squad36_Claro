@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -17,41 +17,53 @@ interface Props {
   region?: string | null;
 }
 
-const mockDataGlobal = {
-  labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-  datasets: [
-    {
-      label: 'Faturamento Global',
-      data: [30000, 40000, 35000, 50000, 45000, 60000],
-      backgroundColor: '#8b0000',
-      borderRadius: 6,
-      barThickness: 20,
-    },
-  ],
-};
-
-const mockDataPorRegiao: Record<string, number[]> = {
-  Sul: [10000, 15000, 12000, 17000, 14000, 18000],
-  Sudeste: [15000, 20000, 18000, 22000, 21000, 25000],
-  Nordeste: [5000, 8000, 7000, 11000, 10000, 17000],
-  CentroOeste: [4000, 6000, 5000, 7000, 6000, 8000],
-  Norte: [3000, 5000, 4000, 6000, 5500, 7000],
-};
+const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
 export default function FaturamentoMensalChart({ region }: Props) {
-  // Se tem região, usa dados filtrados, senão usa dados globais
-  const data = {
-    labels: mockDataGlobal.labels,
+  const [data, setData] = useState<any>({
+    labels: meses,
     datasets: [
       {
-        label: region ? `Faturamento - ${region}` : 'Faturamento Global',
-        data: region ? mockDataPorRegiao[region] || [] : mockDataGlobal.datasets[0].data,
+        label: 'Faturamento',
+        data: Array(12).fill(0),
         backgroundColor: '#8b0000',
         borderRadius: 6,
         barThickness: 20,
       },
     ],
-  };
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('http://localhost:8080/orders');
+      const result = await response.json();
+      const pedidos = result.content || [];
+
+      const faturamentoPorMes = Array(12).fill(0);
+
+      pedidos.forEach((order: any) => {
+        if (region && order.region?.toLowerCase() !== region.toLowerCase()) return;
+
+        const date = new Date(order.orderDate);
+        const mes = date.getMonth();
+        faturamentoPorMes[mes] += order.totalValue || 0;
+      });
+
+      setData({
+        labels: meses,
+        datasets: [
+          {
+            label: region ? `Faturamento - ${region}` : 'Faturamento Global',
+            data: faturamentoPorMes,
+            backgroundColor: '#8b0000',
+            borderRadius: 6,
+            barThickness: 20,
+          },
+        ],
+      });
+    }
+    fetchData();
+  }, [region]);
 
   return (
     <div className="bg-white shadow-lg rounded-xl p-4 w-full h-full">

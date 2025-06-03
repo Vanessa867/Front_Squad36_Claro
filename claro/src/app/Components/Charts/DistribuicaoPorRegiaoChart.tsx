@@ -62,7 +62,7 @@ export default function DistribuicaoPorRegiaoChart({
     if (region) {
       return regionColors[region] || '#888';
     }
-    return '#888'; // cinza médio padrão
+    return '#888';
   }
 
   return (
@@ -102,7 +102,7 @@ export default function DistribuicaoPorRegiaoChart({
                     hover: { fill: '#f0a500', outline: 'none', cursor: 'pointer' },
                     pressed: { outline: 'none' },
                   }}
-                  onClick={() => onRegionClick(sigla)}
+                  onClick={() => onRegionClick(dataRegion[sigla])}
                 />
               );
             })
