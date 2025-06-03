@@ -28,7 +28,7 @@ export default function ListarProdutos() {
 
     const limit = 10;
 
-    const baseUrl = "http://localhost:8080";
+    const baseUrl = "https://claro-hu2o.onrender.com";
 
     const fetchProducts = async (page: number) => {
         try {
