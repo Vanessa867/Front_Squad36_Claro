@@ -15,7 +15,7 @@ const SideNav = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className={`bg-white h-screen shadow-md p-4 transition-all duration-300 ${collapsed ? "w-20" : "w-64"}`}>
+    <div className={`bg-white h-full shadow-md p-4 transition-all duration-300 ${collapsed ? "w-20" : "w-64"}`}>
       {/* Top Section */}
       <div className={`flex items-center ${collapsed ? "justify-center mb-6" : "justify-between mb-6"}`}>
         {!collapsed && (
