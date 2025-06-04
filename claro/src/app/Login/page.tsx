@@ -46,7 +46,7 @@ export default function LoginPage() {
 
       // Redireciona após 2 segundos
       setTimeout(() => {
-        router.push('/dashboard')
+        router.push('/Dashboard')
       }, 2000)
     } catch (error) {
       setErrorMessage('E-mail ou senha inválidos.')
