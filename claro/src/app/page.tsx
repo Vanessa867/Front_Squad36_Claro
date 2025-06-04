@@ -1,6 +1,7 @@
 
 'use client';
-import CadastrarProduto from './CadastrarProdutos/page';
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <CadastrarProduto />;
+  redirect("/Login");
+}

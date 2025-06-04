@@ -7,7 +7,8 @@ const FaturamentoTotal: React.FC = () => {
 
   useEffect(() => {
     async function fetchFaturamento() {
-      const response = await fetch('http://localhost:8080/orders');
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const response = await fetch(`${apiUrl}/orders`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       const data = await response.json();
       // Soma todos os totalValue dos pedidos
       const total = data.content.reduce(
