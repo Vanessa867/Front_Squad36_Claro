@@ -26,7 +26,7 @@ export default function ListarProdutos() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState(0);
 
-    const limit = 10;
+    const limit = 7;
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
