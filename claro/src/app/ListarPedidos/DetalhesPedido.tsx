@@ -52,7 +52,8 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({ pedido, onVoltar }) => 
   const carregarProdutos = async () => {
     try {
       setLoading(true);
-      const resposta = await axios.get('http://localhost:8080/products');
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const resposta = await axios.get(`${apiUrl}/products`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       setProdutos(resposta.data);
     } catch (error) {
       console.error('Erro ao carregar produtos:', error);
@@ -95,12 +96,12 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({ pedido, onVoltar }) => 
           <FiArrowLeft className="mr-2 h-5 w-5" />
           Voltar para lista de pedidos
         </button>
-        
+
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">
             Detalhes do Pedido
           </h1>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="flex items-center space-x-3">
               <div className="bg-red-100 p-2 rounded-lg">
@@ -111,7 +112,7 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({ pedido, onVoltar }) => 
                 <p className="font-semibold text-gray-800">{pedido.id.substring(0, 8)}...</p>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-3">
               <div className="bg-blue-100 p-2 rounded-lg">
                 <FiCalendar className="h-5 w-5 text-blue-600" />
@@ -121,7 +122,7 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({ pedido, onVoltar }) => 
                 <p className="font-semibold text-gray-800">{formatarData(pedido.orderDate)}</p>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-3">
               <div className="bg-green-100 p-2 rounded-lg">
                 <FiMapPin className="h-5 w-5 text-green-600" />
@@ -131,7 +132,7 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({ pedido, onVoltar }) => 
                 <p className="font-semibold text-gray-800">{pedido.region}</p>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-3">
               <div className="bg-yellow-100 p-2 rounded-lg">
                 <FiDollarSign className="h-5 w-5 text-yellow-600" />
@@ -162,7 +163,7 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({ pedido, onVoltar }) => 
             <div className="space-y-4">
               {pedido.items.map((item) => {
                 const produto = obterProduto(item.productId);
-                
+
                 return (
                   <div
                     key={item.id}

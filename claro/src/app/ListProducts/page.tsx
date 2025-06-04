@@ -26,13 +26,13 @@ export default function ListarProdutos() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState(0);
 
-    const limit = 10;
+    const limit = 7;
 
-    const baseUrl = "http://localhost:8080";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
     const fetchProducts = async (page: number) => {
         try {
-            const res = await axios.get(`${baseUrl}/products?page=${page}&size=${limit}`, {
+            const res = await axios.get(`${apiUrl}/products?page=${page}&size=${limit}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
 
