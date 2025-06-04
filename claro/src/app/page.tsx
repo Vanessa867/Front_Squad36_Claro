@@ -1,6 +1,6 @@
-// src/app/page.tsx
-import { redirect } from "next/navigation";
+
+'use client';
+import CadastrarProduto from './CadastrarProdutos/page';
 
 export default function Home() {
-  redirect("/Login"); 
-}
+  return <CadastrarProduto />;
