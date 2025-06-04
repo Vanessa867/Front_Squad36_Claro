@@ -26,69 +26,70 @@ export default function CadastrarProduto() {
   };
 
   type JwtPayload = {
-  sub: string; // ou 'id', depende do token do seu backend
-  // outros campos se precisar
-};
-
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  const token = localStorage.getItem('token'); // ou onde você guarda o JWT
-  if (!token) {
-    alert('Usuário não autenticado');
-    return;
-  }
-
-  const decoded = jwtDecode<JwtPayload>(token);
-  const createdBy = decoded.sub; // ou decoded.id dependendo do seu token
-
-  let imgUrl = "";
-  if (imagem) {
-    // Atenção: Isso cria uma URL local temporária, que o backend não consegue acessar.
-    // Você precisa subir a imagem para um serviço e pegar a URL real.
-    imgUrl = URL.createObjectURL(imagem); // só para preview, não para envio real
-  }
-
-  const produto = {
-    name: form.name,
-    description: form.description,
-    stock: parseInt(form.stock),
-    category: form.category,
-    price: parseFloat(form.price),
-    imgUrl,
-    createdBy, // envia só o id (string)
+    sub: string; // ou 'id', depende do token do seu backend
+    // outros campos se precisar
   };
 
-  try {
-    const response = await fetch("http://localhost:8080/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`, // IMPORTANTE: enviar o token no header
-      },
-      body: JSON.stringify(produto),
-    });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    if (response.ok) {
-      alert("Produto cadastrado com sucesso!");
-      setForm({
-        name: '',
-        description: '',
-        stock: '',
-        category: '',
-        price: '',
-        
-      });
-      setImagem(null);
-    } else {
-      console.error(await response.text());
-      alert("Erro ao cadastrar produto.");
+    const token = localStorage.getItem('token'); // ou onde você guarda o JWT
+    if (!token) {
+      alert('Usuário não autenticado');
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    alert("Erro de conexão com o servidor.");
-  }
-};
+
+    const decoded = jwtDecode<JwtPayload>(token);
+    const createdBy = decoded.sub; // ou decoded.id dependendo do seu token
+
+    let imgUrl = "";
+    if (imagem) {
+      // Atenção: Isso cria uma URL local temporária, que o backend não consegue acessar.
+      // Você precisa subir a imagem para um serviço e pegar a URL real.
+      imgUrl = URL.createObjectURL(imagem); // só para preview, não para envio real
+    }
+
+    const produto = {
+      name: form.name,
+      description: form.description,
+      stock: parseInt(form.stock),
+      category: form.category,
+      price: parseFloat(form.price),
+      imgUrl,
+      createdBy, // envia só o id (string)
+    };
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const response = await fetch(`${apiUrl}/products`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`, // IMPORTANTE: enviar o token no header
+        },
+        body: JSON.stringify(produto),
+      });
+
+      if (response.ok) {
+        alert("Produto cadastrado com sucesso!");
+        setForm({
+          name: '',
+          description: '',
+          stock: '',
+          category: '',
+          price: '',
+
+        });
+        setImagem(null);
+      } else {
+        console.error(await response.text());
+        alert("Erro ao cadastrar produto.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Erro de conexão com o servidor.");
+    }
+  };
   return (
     <div className="flex">
       <SideNav />

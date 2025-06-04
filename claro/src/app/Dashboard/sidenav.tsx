@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+
 import {
   FaHome,
   FaClipboardList,
@@ -11,8 +13,14 @@ import {
 } from "react-icons/fa";
 
 const SideNav = () => {
+  const router = useRouter();
   const [active, setActive] = useState<string>("home");
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleNavigation = (name: string, path: string) => {
+    setActive(name);
+    router.push(path);
+  };
 
   return (
     <div className={`bg-white h-screen shadow-md p-4 transition-all duration-300 ${collapsed ? "w-20" : "w-64"}`}>
@@ -36,12 +44,11 @@ const SideNav = () => {
         <li>
           <a
             href="#"
-            onClick={() => setActive("Dashboard")}
-            className={`flex items-center gap-3 p-2 rounded-md transition ${
-              active === "Dashboard"
-                ? "bg-red-100 text-red-600 font-medium"
-                : "hover:bg-gray-100"
-            }`}
+            onClick={() => handleNavigation("Dashboard", "/Dashboard")}
+            className={`flex items-center gap-3 p-2 rounded-md transition ${active === "Dashboard"
+              ? "bg-red-100 text-red-600 font-medium"
+              : "hover:bg-gray-100"
+              }`}
           >
             <FaHome />
             {!collapsed && "Dashboard"}
@@ -51,12 +58,11 @@ const SideNav = () => {
         <li>
           <a
             href="#"
-            onClick={() => setActive("ListarPedidos")}
-            className={`flex items-center gap-3 p-2 rounded-md transition ${
-              active === "ListarPedidos"
-                ? "bg-red-100 text-red-600 font-medium"
-                : "hover:bg-gray-100"
-            }`}
+            onClick={() => handleNavigation("ListarPedidos", "/ListarPedidos")}
+            className={`flex items-center gap-3 p-2 rounded-md transition ${active === "ListarPedidos"
+              ? "bg-red-100 text-red-600 font-medium"
+              : "hover:bg-gray-100"
+              }`}
           >
             <FaClipboardList />
             {!collapsed && "Listar Pedidos"}
@@ -66,12 +72,11 @@ const SideNav = () => {
         <li>
           <a
             href="#"
-            onClick={() => setActive("CadastrarUsuarios")}
-            className={`flex items-center gap-3 p-2 rounded-md transition ${
-              active === "CadastrarUsuarios"
-                ? "bg-red-100 text-red-600 font-medium"
-                : "hover:bg-gray-100"
-            }`}
+            onClick={() => handleNavigation("CadastrarUsuarios", "/CadastroUsuario")}
+            className={`flex items-center gap-3 p-2 rounded-md transition ${active === "CadastrarUsuarios"
+              ? "bg-red-100 text-red-600 font-medium"
+              : "hover:bg-gray-100"
+              }`}
           >
             <FaUserPlus />
             {!collapsed && "Cadastrar Usuários"}
@@ -81,12 +86,11 @@ const SideNav = () => {
         <li>
           <a
             href="#"
-            onClick={() => setActive("CadastrarProdutos")}
-            className={`flex items-center gap-3 p-2 rounded-md transition ${
-              active === "CadastrarProdutos"
-                ? "bg-red-100 text-red-600 font-medium"
-                : "hover:bg-gray-100"
-            }`}
+            onClick={() => handleNavigation("CadastrarProdutos", "/CadastrarProdutos")}
+            className={`flex items-center gap-3 p-2 rounded-md transition ${active === "CadastrarProdutos"
+              ? "bg-red-100 text-red-600 font-medium"
+              : "hover:bg-gray-100"
+              }`}
           >
             <FaPlusSquare />
             {!collapsed && "Cadastrar Produtos"}
@@ -96,12 +100,11 @@ const SideNav = () => {
         <li>
           <a
             href="#"
-            onClick={() => setActive("ListarProdutos")}
-            className={`flex items-center gap-3 p-2 rounded-md transition ${
-              active === "ListarProdutos"
-                ? "bg-red-100 text-red-600 font-medium"
-                : "hover:bg-gray-100"
-            }`}
+            onClick={() => handleNavigation("ListarProdutos", "/ListProducts")}
+            className={`flex items-center gap-3 p-2 rounded-md transition ${active === "ListarProdutos"
+              ? "bg-red-100 text-red-600 font-medium"
+              : "hover:bg-gray-100"
+              }`}
           >
             <FaBoxOpen />
             {!collapsed && "Listar Produtos"}

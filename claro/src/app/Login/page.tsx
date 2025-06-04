@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -49,6 +49,7 @@ export default function LoginPage() {
         router.push('/Dashboard')
       }, 2000)
     } catch (error) {
+      console.log(error)
       setErrorMessage('E-mail ou senha inválidos.')
       setSuccessMessage('')
     }

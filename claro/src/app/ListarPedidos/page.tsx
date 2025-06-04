@@ -74,10 +74,11 @@ const PedidosPage = () => {
   const [loadingCustomers, setLoadingCustomers] = useState(false);
 
   const itensPorPagina = 10;
-  const baseUrl = 'http://localhost:8080/orders';
-  const customersUrl = 'http://localhost:8080/customer/';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const baseUrl = `${apiUrl}/orders`
+  const customersUrl = `${apiUrl}/customer/`;
 
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setBuscaDebounced(busca);
@@ -87,13 +88,13 @@ const PedidosPage = () => {
     return () => clearTimeout(timer);
   }, [busca]);
 
-  
+
   const carregarCustomers = useCallback(async () => {
     setLoadingCustomers(true);
     try {
-      const resposta = await axios.get(customersUrl);
+      const resposta = await axios.get(customersUrl, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       console.log('Customers carregados:', resposta.data);
-      
+
       if (Array.isArray(resposta.data)) {
         setCustomers(resposta.data);
       } else if (resposta.data.content && Array.isArray(resposta.data.content)) {
@@ -110,33 +111,33 @@ const PedidosPage = () => {
     }
   }, []);
 
-  
+
   useEffect(() => {
     carregarCustomers();
   }, [carregarCustomers]);
 
- 
+
   const buscarCustomer = useCallback((userId: string): Customer | null => {
     return customers.find(customer => customer.id === userId) || null;
   }, [customers]);
 
- 
+
   const carregarTodosOsPedidos = useCallback(async () => {
     setLoading(true);
     try {
       const params = {
         page: 0,
-        size: 1000, 
+        size: 1000,
       };
 
       console.log('Carregando todos os pedidos...');
 
-      const resposta = await axios.get<PaginatedResponse>(baseUrl, { params });
-      
+      const resposta = await axios.get<PaginatedResponse>(baseUrl, { params, headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+
       console.log('Resposta da API:', resposta.data);
-      
+
       const data = resposta.data;
-      
+
       if (data && Array.isArray(data.content)) {
         setTodosOsPedidos(data.content);
         console.log(`✅ Carregados ${data.content.length} pedidos`);
@@ -152,7 +153,7 @@ const PedidosPage = () => {
     }
   }, []);
 
-  
+
   useEffect(() => {
     carregarTodosOsPedidos();
   }, [carregarTodosOsPedidos]);
@@ -163,38 +164,38 @@ const PedidosPage = () => {
     }
 
     const termo = termoBusca.toLowerCase().trim();
-    
+
     return pedidos.filter(pedido => {
       const customer = buscarCustomer(pedido.userId);
-      
+
       const buscaId = pedido.id.toLowerCase().includes(termo);
       const buscaRegiao = pedido.region.toLowerCase().includes(termo);
       const buscaData = pedido.orderDate.toLowerCase().includes(termo);
       const buscaValor = pedido.totalValue.toString().includes(termo);
       const buscaEmail = customer?.email?.toLowerCase().includes(termo) || false;
-      
-      
+
+
       return buscaId || buscaRegiao || buscaData || buscaValor || buscaEmail;
     });
   }, [buscarCustomer]);
 
- 
+
   useEffect(() => {
     const pedidosParaExibir = filtrarPedidos(todosOsPedidos, buscaDebounced);
     setPedidosFiltrados(pedidosParaExibir);
     setTotalItems(pedidosParaExibir.length);
     setTotalPaginas(Math.ceil(pedidosParaExibir.length / itensPorPagina));
-    
+
     console.log(`Filtro aplicado: "${buscaDebounced}" retornou ${pedidosParaExibir.length} de ${todosOsPedidos.length} pedidos`);
   }, [todosOsPedidos, buscaDebounced, filtrarPedidos]);
 
- 
+
   useEffect(() => {
     const inicio = (paginaAtual - 1) * itensPorPagina;
     const fim = inicio + itensPorPagina;
     const pedidosPaginados = pedidosFiltrados.slice(inicio, fim);
     setPedidosExibidos(pedidosPaginados);
-    
+
     console.log(`📄 Página ${paginaAtual}: mostrando ${pedidosPaginados.length} pedidos (${inicio + 1}-${Math.min(fim, pedidosFiltrados.length)} de ${pedidosFiltrados.length})`);
   }, [pedidosFiltrados, paginaAtual]);
 
@@ -238,13 +239,13 @@ const PedidosPage = () => {
 
   const temProximaPagina = paginaAtual < totalPaginas;
   const temPaginaAnterior = paginaAtual > 1;
-  
+
   const paginaAnterior = () => {
     if (temPaginaAnterior) {
       setPaginaAtual((prev) => prev - 1);
     }
   };
-  
+
   const proximaPagina = () => {
     if (temProximaPagina) {
       setPaginaAtual((prev) => prev + 1);
@@ -272,8 +273,8 @@ const PedidosPage = () => {
     return (
       <div className="flex min-h-screen bg-white">
         <SideNav />
-        <DetalhesPedido 
-          pedido={pedidoSelecionado} 
+        <DetalhesPedido
+          pedido={pedidoSelecionado}
           onVoltar={fecharDetalhes}
         />
       </div>
@@ -291,7 +292,7 @@ const PedidosPage = () => {
 
         <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
           <h2 className="text-lg font-semibold text-gray-700">
-            Todos os pedidos 
+            Todos os pedidos
             {todosOsPedidos.length > 0 && (
               <span className="ml-2 text-sm font-normal text-gray-500">
                 ({totalItems} {buscaDebounced ? 'filtrados' : 'total'} de {todosOsPedidos.length})
@@ -322,7 +323,7 @@ const PedidosPage = () => {
         {buscaDebounced && (
           <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-sm text-green-700">
-              🔍 Filtro ativo: <strong>"{buscaDebounced}"</strong> 
+              🔍 Filtro ativo: <strong>"{buscaDebounced}"</strong>
               <span className="ml-2 text-green-600">
                 ({totalItems} resultado{totalItems !== 1 ? 's' : ''} encontrado{totalItems !== 1 ? 's' : ''})
               </span>
@@ -401,7 +402,7 @@ const PedidosPage = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {pedidosExibidos.map((pedido) => {
                       const customer = buscarCustomer(pedido.userId);
-                      
+
                       return (
                         <tr key={pedido.id} className="hover:bg-gray-50 transition-colors">
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -428,14 +429,13 @@ const PedidosPage = () => {
                             )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                            <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                              pedido.region === 'SUL' ? 'bg-blue-100 text-blue-800' :
+                            <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${pedido.region === 'SUL' ? 'bg-blue-100 text-blue-800' :
                               pedido.region === 'NORTE' ? 'bg-green-100 text-green-800' :
-                              pedido.region === 'CENTRO-OESTE' ? 'bg-yellow-100 text-yellow-800' :
-                              pedido.region === 'NORDESTE' ? 'bg-purple-100 text-purple-800' :
-                              pedido.region === 'SUDESTE' ? 'bg-indigo-100 text-indigo-800' :
-                              'bg-red-100 text-red-800'
-                            }`}>
+                                pedido.region === 'CENTRO-OESTE' ? 'bg-yellow-100 text-yellow-800' :
+                                  pedido.region === 'NORDESTE' ? 'bg-purple-100 text-purple-800' :
+                                    pedido.region === 'SUDESTE' ? 'bg-indigo-100 text-indigo-800' :
+                                      'bg-red-100 text-red-800'
+                              }`}>
                               {pedido.region}
                             </span>
                           </td>
@@ -479,7 +479,7 @@ const PedidosPage = () => {
                   </span>
                 )}
               </div>
-              
+
               {totalPaginas > 1 && (
                 <div className="flex items-center space-x-1">
                   <button
@@ -489,7 +489,7 @@ const PedidosPage = () => {
                   >
                     ««
                   </button>
-                  
+
                   <button
                     onClick={paginaAnterior}
                     disabled={!temPaginaAnterior}
@@ -502,11 +502,10 @@ const PedidosPage = () => {
                     <button
                       key={numeroPagina}
                       onClick={() => irParaPagina(numeroPagina)}
-                      className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                        numeroPagina === paginaAtual
-                          ? 'bg-red-600 text-white border border-red-600'
-                          : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
-                      }`}
+                      className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${numeroPagina === paginaAtual
+                        ? 'bg-red-600 text-white border border-red-600'
+                        : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                        }`}
                     >
                       {numeroPagina}
                     </button>
@@ -519,7 +518,7 @@ const PedidosPage = () => {
                   >
                     ›
                   </button>
-                  
+
                   <button
                     onClick={() => irParaPagina(totalPaginas)}
                     disabled={paginaAtual === totalPaginas}

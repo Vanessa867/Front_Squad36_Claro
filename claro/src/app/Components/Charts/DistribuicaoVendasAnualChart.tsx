@@ -56,7 +56,8 @@ export default function DistribuicaoVendasAnualChart() {
 
   useEffect(() => {
     async function fetchVendas() {
-      const response = await fetch("http://localhost:8080/orders");
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const response = await fetch(`${apiUrl}/orders`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       const result = await response.json();
       const pedidos = result.content || [];
 

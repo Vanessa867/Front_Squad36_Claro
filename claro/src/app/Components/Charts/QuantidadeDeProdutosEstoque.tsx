@@ -7,7 +7,8 @@ const QuantidadeDeProdutosEstoque: React.FC = () => {
 
   useEffect(() => {
     async function fetchQuantidadeEstoque() {
-      const response = await fetch('http://localhost:8080/products');
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const response = await fetch(`${apiUrl}/products`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
       const data = await response.json();
       // Soma todos os estoques dos produtos
       const total = data.reduce(
