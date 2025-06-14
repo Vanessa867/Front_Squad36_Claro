@@ -68,7 +68,7 @@ export default function FaturamentoMensalChart({ region }: Props) {
 
   return (
     <div className="bg-white shadow-lg rounded-xl p-4 w-full h-full">
-      <h2 className="text-md font-semibold mb-2">Faturamento Mensal</h2>
+      <h2 className="text-black font-semibold mb-2">Faturamento Mensal</h2>
       <Bar data={data} options={{ responsive: true }} />
     </div>
   );

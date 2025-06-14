@@ -22,8 +22,8 @@ const FaturamentoTotal: React.FC = () => {
 
   return (
     <div className="bg-white rounded-xl shadow p-4">
-      <p className="text-sm text-gray-500">Faturamento total</p>
-      <h2 className="text-2xl font-semibold">
+      <p className="text-sm text-black ">Faturamento total</p>
+      <h2 className="text-2xl text-black font-semibold">
         {faturamento !== null ? `R$ ${faturamento.toLocaleString()}` : 'Carregando...'}
       </h2>
     </div>

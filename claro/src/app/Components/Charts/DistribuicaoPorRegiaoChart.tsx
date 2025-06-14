@@ -67,7 +67,7 @@ export default function DistribuicaoPorRegiaoChart({
 
   return (
     <div className="p-4 bg-white rounded-xl shadow-lg w-full max-w-4xl mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Mapa do Brasil por região</h2>
+      <h2 className="text-xl text-black font-semibold mb-4">Mapa do Brasil por região</h2>
       <p className="mb-4 text-sm text-gray-600">
         Clique em um estado para filtrar. Clique fora dos estados para mostrar o Brasil completo.
       </p>

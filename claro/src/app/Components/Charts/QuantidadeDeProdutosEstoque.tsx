@@ -24,7 +24,7 @@ const QuantidadeDeProdutosEstoque: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow p-4">
       <p className="text-sm text-gray-500">Quantidade de produto em estoque</p>
-      <h2 className="text-2xl font-semibold">
+      <h2 className="text-2xl text-black font-semibold">
         {QuantidadeEstoque !== null ? `${QuantidadeEstoque.toLocaleString()}` : 'Carregando...'}
       </h2>
     </div>
