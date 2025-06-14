@@ -46,7 +46,7 @@ const SideNav = () => {
             href="#"
             onClick={() => handleNavigation("Dashboard", "/Dashboard")}
             className={`flex items-center gap-3 p-2 rounded-md transition ${active === "Dashboard"
-              ? "bg-red-100 text-red-600 font-medium"
+              ? "bg-[#0693e3] text-[#0693e3] font-medium"
               : "hover:bg-gray-100"
               }`}
           >
@@ -60,7 +60,7 @@ const SideNav = () => {
             href="#"
             onClick={() => handleNavigation("ListarPedidos", "/ListarPedidos")}
             className={`flex items-center gap-3 p-2 rounded-md transition ${active === "ListarPedidos"
-              ? "bg-red-100 text-red-600 font-medium"
+              ? "bg-[#0693e3] text-[#0693e3] font-medium"
               : "hover:bg-gray-100"
               }`}
           >
@@ -74,7 +74,7 @@ const SideNav = () => {
             href="#"
             onClick={() => handleNavigation("CadastrarUsuarios", "/CadastroUsuario")}
             className={`flex items-center gap-3 p-2 rounded-md transition ${active === "CadastrarUsuarios"
-              ? "bg-red-100 text-red-600 font-medium"
+              ? "bg-[#0693e3] text-[#0693e3] font-medium"
               : "hover:bg-gray-100"
               }`}
           >
@@ -88,7 +88,7 @@ const SideNav = () => {
             href="#"
             onClick={() => handleNavigation("CadastrarProdutos", "/CadastrarProdutos")}
             className={`flex items-center gap-3 p-2 rounded-md transition ${active === "CadastrarProdutos"
-              ? "bg-red-100 text-red-600 font-medium"
+              ? "bg-[#0693e3] text-[#0693e3] font-medium"
               : "hover:bg-gray-100"
               }`}
           >
@@ -102,7 +102,7 @@ const SideNav = () => {
             href="#"
             onClick={() => handleNavigation("ListarProdutos", "/ListProducts")}
             className={`flex items-center gap-3 p-2 rounded-md transition ${active === "ListarProdutos"
-              ? "bg-red-100 text-red-600 font-medium"
+              ? "bg-[#0693e3] text-[#0693e3] font-medium"
               : "hover:bg-gray-100"
               }`}
           >

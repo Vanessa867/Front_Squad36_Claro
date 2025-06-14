@@ -172,7 +172,7 @@ export default function CadastrarProduto() {
 
               <button
                 type="submit"
-                className="w-full bg-red-700 hover:bg-red-800 text-white py-2 rounded font-medium"
+                className="w-full bg-[#0693e3] hover:bg-[#abb8c3] text-white py-2 rounded font-medium"
               >
                 Cadastrar
               </button>

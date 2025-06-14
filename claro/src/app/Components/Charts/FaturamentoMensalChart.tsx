@@ -26,7 +26,7 @@ export default function FaturamentoMensalChart({ region }: Props) {
       {
         label: 'Faturamento',
         data: Array(12).fill(0),
-        backgroundColor: '#8b0000',
+        backgroundColor: '#ff6900',
         borderRadius: 6,
         barThickness: 20,
       },
@@ -56,7 +56,7 @@ export default function FaturamentoMensalChart({ region }: Props) {
           {
             label: region ? `Faturamento - ${region}` : 'Faturamento Global',
             data: faturamentoPorMes,
-            backgroundColor: '#8b0000',
+            backgroundColor: '#ff6900',
             borderRadius: 6,
             barThickness: 20,
           },

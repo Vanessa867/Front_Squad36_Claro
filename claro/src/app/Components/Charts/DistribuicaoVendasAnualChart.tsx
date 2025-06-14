@@ -79,7 +79,7 @@ export default function DistribuicaoVendasAnualChart() {
         label: "Vendas",
         data: vendasPorMes,
         fill: true,
-        borderColor: "#991B1B",
+        borderColor: "#ff6900",
         backgroundColor: "rgba(153, 27, 27, 0.1)",
         tension: 0.4,
         pointRadius: 0,
