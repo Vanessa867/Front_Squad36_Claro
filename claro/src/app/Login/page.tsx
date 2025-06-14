@@ -58,7 +58,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex">
       {/* Lado esquerdo */}
-      <div className="w-1/2 bg-[#7D0000] flex items-center justify-center relative">
+      <div className="w-1/2 bg-[#0693e3] flex items-center justify-center relative">
         <h1 className="text-white text-3xl md:text-4xl font-bold z-10">Ustore</h1>
       </div>
 
@@ -112,7 +112,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="bg-[#7D0000] hover:bg-[#660000] text-white font-semibold py-3 rounded-lg transition duration-300"
+              className="bg-[#0693e3] hover:bg-[#abb8c3] text-white font-semibold py-3 rounded-lg transition duration-300"
             >
               Acessar
             </button>

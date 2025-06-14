@@ -76,7 +76,7 @@ export default function CadastrarUsuario() {
                   value="admin"
                   checked={tipoUsuario === 'admin'}
                   onChange={() => setTipoUsuario('admin')}
-                  className="accent-red-800"
+                  className="bg-[#abb8c3]"
                 />
                 Usuário Administrador
               </label>
@@ -87,7 +87,7 @@ export default function CadastrarUsuario() {
                   value="comum"
                   checked={tipoUsuario === 'comum'}
                   onChange={() => setTipoUsuario('comum')}
-                  className="accent-red-800"
+                  className="bg-[#abb8c3]"
                 />
                 Usuário Comum
               </label>
@@ -167,7 +167,7 @@ export default function CadastrarUsuario() {
           <div className="flex justify-center">
             <button
               onClick={handleCadastro}
-              className="bg-red-900 text-white px-8 py-2 rounded-lg hover:bg-red-800 transition"
+              className="bg-[#0693e3] text-white px-8 py-2 rounded-lg hover:bg-[#abb8c3] transition"
             >
               Cadastrar
             </button>
